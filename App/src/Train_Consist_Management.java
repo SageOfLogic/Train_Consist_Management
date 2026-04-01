@@ -1,24 +1,26 @@
-import java.util.HashSet;
-import java.util.Set;
+import java.util.LinkedList;
 
 public class Train_Consist_Management {
     public static void main(String[] args) {
-        Set<String> bogieIds = new HashSet<>();
+        LinkedList<String> trainConsist = new LinkedList<>();
 
-        bogieIds.add("BG101");
-        bogieIds.add("BG102");
-        bogieIds.add("BG103");
+        trainConsist.add("Engine");
+        trainConsist.add("Sleeper");
+        trainConsist.add("AC Coach");
+        trainConsist.add("Cargo");
+        trainConsist.addLast("Guard Coach");
 
-        System.out.println("Adding duplicate ID: BG101...");
-        boolean isAdded = bogieIds.add("BG101");
+        System.out.println("Initial Train Formation:");
+        System.out.println(trainConsist);
 
-        if (!isAdded) {
-            System.out.println("Warning: Duplicate Bogie ID detected. BG101 was not added again.");
-        }
+        trainConsist.add(2, "Pantry Car");
+        System.out.println("\nAfter adding Pantry Car at index 2:");
+        System.out.println(trainConsist);
 
-        System.out.println("\nFinal Train Consist (Unique IDs):");
-        System.out.println(bogieIds);
+        trainConsist.removeFirst();
+        trainConsist.removeLast();
 
-        System.out.println("\nTotal Unique Bogies: " + bogieIds.size());
+        System.out.println("\nFinal Train Consist (After removing Engine and Guard):");
+        System.out.println(trainConsist);
     }
 }
