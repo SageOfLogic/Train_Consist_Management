@@ -1,19 +1,24 @@
-import java.util.ArrayList;
+import java.util.HashSet;
+import java.util.Set;
 
 public class Train_Consist_Management {
     public static void main(String[] args) {
-        ArrayList<String> bogies = new ArrayList<>();
+        Set<String> bogieIds = new HashSet<>();
 
-        bogies.add("Sleeper");
-        bogies.add("AC Chair");
-        bogies.add("First Class");
+        bogieIds.add("BG101");
+        bogieIds.add("BG102");
+        bogieIds.add("BG103");
 
-        System.out.println("After Adding Bogies: " + bogies);
+        System.out.println("Adding duplicate ID: BG101...");
+        boolean isAdded = bogieIds.add("BG101");
 
-        bogies.remove("AC Chair");
+        if (!isAdded) {
+            System.out.println("Warning: Duplicate Bogie ID detected. BG101 was not added again.");
+        }
 
-        System.out.println("Contains Sleeper: " + bogies.contains("Sleeper"));
+        System.out.println("\nFinal Train Consist (Unique IDs):");
+        System.out.println(bogieIds);
 
-        System.out.println("Final Bogie List: " + bogies);
+        System.out.println("\nTotal Unique Bogies: " + bogieIds.size());
     }
 }
