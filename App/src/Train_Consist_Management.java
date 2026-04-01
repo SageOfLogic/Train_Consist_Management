@@ -1,26 +1,26 @@
-import java.util.LinkedList;
+import java.util.LinkedHashSet;
+import java.util.Set;
 
 public class Train_Consist_Management {
     public static void main(String[] args) {
-        LinkedList<String> trainConsist = new LinkedList<>();
+        Set<String> trainFormation = new LinkedHashSet<>();
 
-        trainConsist.add("Engine");
-        trainConsist.add("Sleeper");
-        trainConsist.add("AC Coach");
-        trainConsist.add("Cargo");
-        trainConsist.addLast("Guard Coach");
+        trainFormation.add("Engine");
+        trainFormation.add("Sleeper");
+        trainFormation.add("Cargo");
+        trainFormation.add("Guard");
 
-        System.out.println("Initial Train Formation:");
-        System.out.println(trainConsist);
+        System.out.println("Current Train Formation (Order Maintained):");
+        System.out.println(trainFormation);
 
-        trainConsist.add(2, "Pantry Car");
-        System.out.println("\nAfter adding Pantry Car at index 2:");
-        System.out.println(trainConsist);
+        System.out.println("\nAttempting to attach duplicate bogie: Sleeper...");
+        boolean isAdded = trainFormation.add("Sleeper");
 
-        trainConsist.removeFirst();
-        trainConsist.removeLast();
+        if (!isAdded) {
+            System.out.println("System Alert: Duplicate Bogie 'Sleeper' rejected. Uniqueness enforced.");
+        }
 
-        System.out.println("\nFinal Train Consist (After removing Engine and Guard):");
-        System.out.println(trainConsist);
+        System.out.println("\nFinal Verified Train Formation:");
+        System.out.println(trainFormation);
     }
 }
