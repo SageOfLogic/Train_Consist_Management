@@ -1,39 +1,36 @@
-import java.util.*;
-import java.util.stream.Collectors;
+import java.util.Scanner;
+import java.util.regex.Pattern;
+import java.util.regex.Matcher;
 
 public class Train_Consist {
-
-    static class Bogie {
-        String name;
-        int capacity;
-
-        Bogie(String name, int capacity) {
-            this.name = name;
-            this.capacity = capacity;
-        }
-    }
 
     public static void main(String[] args) {
 
         Scanner sc = new Scanner(System.in);
 
-        List<Bogie> bogies = new ArrayList<>();
+        String trainId = sc.nextLine();
+        String cargoCode = sc.nextLine();
 
-        int n = sc.nextInt();
-        sc.nextLine();
+        String trainPattern = "TRN-\\d{4}";
+        String cargoPattern = "PET-[A-Z]{2}";
 
-        for (int i = 0; i < n; i++) {
-            String name = sc.nextLine();
-            int capacity = sc.nextInt();
-            sc.nextLine();
-            bogies.add(new Bogie(name, capacity));
+        Pattern p1 = Pattern.compile(trainPattern);
+        Pattern p2 = Pattern.compile(cargoPattern);
+
+        Matcher m1 = p1.matcher(trainId);
+        Matcher m2 = p2.matcher(cargoCode);
+
+        if (m1.matches()) {
+            System.out.println("Valid Train ID");
+        } else {
+            System.out.println("Invalid Train ID");
         }
 
-        int totalSeats = bogies.stream()
-                .map(b -> b.capacity)
-                .reduce(0, Integer::sum);
-
-        System.out.println("Total Seating Capacity: " + totalSeats);
+        if (m2.matches()) {
+            System.out.println("Valid Cargo Code");
+        } else {
+            System.out.println("Invalid Cargo Code");
+        }
 
         sc.close();
     }
