@@ -1,54 +1,30 @@
-import java.util.*;
-
-class CargoSafetyException extends RuntimeException {
-    public CargoSafetyException(String message) {
-        super(message);
-    }
-}
+import java.util.Scanner;
 
 public class Train_Consist {
-
-    static class GoodsBogie {
-        String shape;
-        String cargo;
-
-        GoodsBogie(String shape) {
-            this.shape = shape;
-        }
-
-        void assignCargo(String cargo) {
-            try {
-                if (shape.equalsIgnoreCase("Rectangular") &&
-                        cargo.equalsIgnoreCase("Petroleum")) {
-                    throw new CargoSafetyException("Unsafe cargo assignment: Petroleum not allowed in Rectangular bogie");
-                }
-                this.cargo = cargo;
-                System.out.println("Cargo assigned successfully");
-            } catch (CargoSafetyException e) {
-                System.out.println(e.getMessage());
-            } finally {
-                System.out.println("Cargo assignment process completed");
-            }
-        }
-    }
 
     public static void main(String[] args) {
 
         Scanner sc = new Scanner(System.in);
 
         int n = sc.nextInt();
-        sc.nextLine();
-
-        List<GoodsBogie> bogies = new ArrayList<>();
+        int[] capacities = new int[n];
 
         for (int i = 0; i < n; i++) {
-            String shape = sc.nextLine();
-            String cargo = sc.nextLine();
+            capacities[i] = sc.nextInt();
+        }
 
-            GoodsBogie b = new GoodsBogie(shape);
-            b.assignCargo(cargo);
+        for (int i = 0; i < n - 1; i++) {
+            for (int j = 0; j < n - i - 1; j++) {
+                if (capacities[j] > capacities[j + 1]) {
+                    int temp = capacities[j];
+                    capacities[j] = capacities[j + 1];
+                    capacities[j + 1] = temp;
+                }
+            }
+        }
 
-            bogies.add(b);
+        for (int i = 0; i < n; i++) {
+            System.out.println(capacities[i]);
         }
 
         sc.close();
