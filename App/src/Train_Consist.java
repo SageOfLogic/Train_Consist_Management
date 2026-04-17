@@ -1,23 +1,34 @@
 import java.util.*;
 
-class InvalidCapacityException extends Exception {
-    public InvalidCapacityException(String message) {
+class CargoSafetyException extends RuntimeException {
+    public CargoSafetyException(String message) {
         super(message);
     }
 }
 
 public class Train_Consist {
 
-    static class PassengerBogie {
-        String name;
-        int capacity;
+    static class GoodsBogie {
+        String shape;
+        String cargo;
 
-        PassengerBogie(String name, int capacity) throws InvalidCapacityException {
-            if (capacity <= 0) {
-                throw new InvalidCapacityException("Capacity must be greater than zero");
+        GoodsBogie(String shape) {
+            this.shape = shape;
+        }
+
+        void assignCargo(String cargo) {
+            try {
+                if (shape.equalsIgnoreCase("Rectangular") &&
+                        cargo.equalsIgnoreCase("Petroleum")) {
+                    throw new CargoSafetyException("Unsafe cargo assignment: Petroleum not allowed in Rectangular bogie");
+                }
+                this.cargo = cargo;
+                System.out.println("Cargo assigned successfully");
+            } catch (CargoSafetyException e) {
+                System.out.println(e.getMessage());
+            } finally {
+                System.out.println("Cargo assignment process completed");
             }
-            this.name = name;
-            this.capacity = capacity;
         }
     }
 
@@ -25,23 +36,19 @@ public class Train_Consist {
 
         Scanner sc = new Scanner(System.in);
 
-        try {
-            int n = sc.nextInt();
-            sc.nextLine();
+        int n = sc.nextInt();
+        sc.nextLine();
 
-            List<PassengerBogie> bogies = new ArrayList<>();
+        List<GoodsBogie> bogies = new ArrayList<>();
 
-            for (int i = 0; i < n; i++) {
-                String name = sc.nextLine();
-                int capacity = sc.nextInt();
-                sc.nextLine();
+        for (int i = 0; i < n; i++) {
+            String shape = sc.nextLine();
+            String cargo = sc.nextLine();
 
-                bogies.add(new PassengerBogie(name, capacity));
-            }
+            GoodsBogie b = new GoodsBogie(shape);
+            b.assignCargo(cargo);
 
-            System.out.println("Bogie creation successful");
-        } catch (InvalidCapacityException e) {
-            System.out.println(e.getMessage());
+            bogies.add(b);
         }
 
         sc.close();
