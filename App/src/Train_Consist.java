@@ -1,3 +1,4 @@
+import java.util.Arrays;
 import java.util.Scanner;
 
 public class Train_Consist {
@@ -7,25 +8,17 @@ public class Train_Consist {
         Scanner sc = new Scanner(System.in);
 
         int n = sc.nextInt();
-        int[] capacities = new int[n];
+        sc.nextLine();
+
+        String[] bogieNames = new String[n];
 
         for (int i = 0; i < n; i++) {
-            capacities[i] = sc.nextInt();
+            bogieNames[i] = sc.nextLine();
         }
 
-        for (int i = 0; i < n - 1; i++) {
-            for (int j = 0; j < n - i - 1; j++) {
-                if (capacities[j] > capacities[j + 1]) {
-                    int temp = capacities[j];
-                    capacities[j] = capacities[j + 1];
-                    capacities[j + 1] = temp;
-                }
-            }
-        }
+        Arrays.sort(bogieNames);
 
-        for (int i = 0; i < n; i++) {
-            System.out.println(capacities[i]);
-        }
+        System.out.println(Arrays.toString(bogieNames));
 
         sc.close();
     }
