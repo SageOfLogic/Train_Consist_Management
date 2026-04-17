@@ -1,4 +1,5 @@
 import java.util.*;
+import java.util.stream.Collectors;
 
 public class Train_Consist {
 
@@ -28,9 +29,11 @@ public class Train_Consist {
             bogies.add(new Bogie(name, capacity));
         }
 
-        bogies.sort(Comparator.comparingInt(b -> b.capacity));
+        List<Bogie> filteredBogies = bogies.stream()
+                .filter(b -> b.capacity > 60)
+                .collect(Collectors.toList());
 
-        for (Bogie b : bogies) {
+        for (Bogie b : filteredBogies) {
             System.out.println("Bogie: " + b.name + " | Capacity: " + b.capacity);
         }
 
