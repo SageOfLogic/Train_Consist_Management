@@ -1,36 +1,37 @@
-import java.util.Scanner;
-import java.util.regex.Pattern;
-import java.util.regex.Matcher;
+import java.util.*;
 
 public class Train_Consist {
+
+    static class Bogie {
+        String type;
+        String cargo;
+
+        Bogie(String type, String cargo) {
+            this.type = type;
+            this.cargo = cargo;
+        }
+    }
 
     public static void main(String[] args) {
 
         Scanner sc = new Scanner(System.in);
 
-        String trainId = sc.nextLine();
-        String cargoCode = sc.nextLine();
+        List<Bogie> bogies = new ArrayList<>();
 
-        String trainPattern = "TRN-\\d{4}";
-        String cargoPattern = "PET-[A-Z]{2}";
+        int n = sc.nextInt();
+        sc.nextLine();
 
-        Pattern p1 = Pattern.compile(trainPattern);
-        Pattern p2 = Pattern.compile(cargoPattern);
-
-        Matcher m1 = p1.matcher(trainId);
-        Matcher m2 = p2.matcher(cargoCode);
-
-        if (m1.matches()) {
-            System.out.println("Valid Train ID");
-        } else {
-            System.out.println("Invalid Train ID");
+        for (int i = 0; i < n; i++) {
+            String type = sc.nextLine();
+            String cargo = sc.nextLine();
+            bogies.add(new Bogie(type, cargo));
         }
 
-        if (m2.matches()) {
-            System.out.println("Valid Cargo Code");
-        } else {
-            System.out.println("Invalid Cargo Code");
-        }
+        boolean isSafe = bogies.stream()
+                .allMatch(b -> !b.type.equalsIgnoreCase("Cylindrical")
+                        || b.cargo.equalsIgnoreCase("Petroleum"));
+
+        System.out.println(isSafe);
 
         sc.close();
     }
