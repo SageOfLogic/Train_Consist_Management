@@ -29,12 +29,14 @@ public class Train_Consist {
             bogies.add(new Bogie(name, capacity));
         }
 
-        List<Bogie> filteredBogies = bogies.stream()
-                .filter(b -> b.capacity > 60)
-                .collect(Collectors.toList());
+        Map<String, List<Bogie>> groupedBogies = bogies.stream()
+                .collect(Collectors.groupingBy(b -> b.name));
 
-        for (Bogie b : filteredBogies) {
-            System.out.println("Bogie: " + b.name + " | Capacity: " + b.capacity);
+        for (Map.Entry<String, List<Bogie>> entry : groupedBogies.entrySet()) {
+            System.out.println("Bogie Type: " + entry.getKey());
+            for (Bogie b : entry.getValue()) {
+                System.out.println("  Bogie: " + b.name + " | Capacity: " + b.capacity);
+            }
         }
 
         sc.close();
