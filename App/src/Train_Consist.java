@@ -1,26 +1,37 @@
-import java.util.HashMap;
-import java.util.Map;
-import java.util.Scanner;
+import java.util.*;
 
 public class Train_Consist {
 
+    static class Bogie {
+        String name;
+        int capacity;
+
+        Bogie(String name, int capacity) {
+            this.name = name;
+            this.capacity = capacity;
+        }
+    }
+
     public static void main(String[] args) {
 
-        HashMap<String, Integer> bogieCapacityMap = new HashMap<>();
         Scanner sc = new Scanner(System.in);
+
+        List<Bogie> bogies = new ArrayList<>();
 
         int n = sc.nextInt();
         sc.nextLine();
 
         for (int i = 0; i < n; i++) {
-            String bogie = sc.nextLine();
+            String name = sc.nextLine();
             int capacity = sc.nextInt();
             sc.nextLine();
-            bogieCapacityMap.put(bogie, capacity);
+            bogies.add(new Bogie(name, capacity));
         }
 
-        for (Map.Entry<String, Integer> entry : bogieCapacityMap.entrySet()) {
-            System.out.println("Bogie: " + entry.getKey() + " | Capacity: " + entry.getValue());
+        bogies.sort(Comparator.comparingInt(b -> b.capacity));
+
+        for (Bogie b : bogies) {
+            System.out.println("Bogie: " + b.name + " | Capacity: " + b.capacity);
         }
 
         sc.close();
