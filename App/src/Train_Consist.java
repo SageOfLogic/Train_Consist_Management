@@ -3,12 +3,12 @@ import java.util.*;
 public class Train_Consist {
 
     static class Bogie {
-        String type;
-        String cargo;
+        String name;
+        int capacity;
 
-        Bogie(String type, String cargo) {
-            this.type = type;
-            this.cargo = cargo;
+        Bogie(String name, int capacity) {
+            this.name = name;
+            this.capacity = capacity;
         }
     }
 
@@ -22,16 +22,35 @@ public class Train_Consist {
         sc.nextLine();
 
         for (int i = 0; i < n; i++) {
-            String type = sc.nextLine();
-            String cargo = sc.nextLine();
-            bogies.add(new Bogie(type, cargo));
+            String name = sc.nextLine();
+            int capacity = sc.nextInt();
+            sc.nextLine();
+            bogies.add(new Bogie(name, capacity));
         }
 
-        boolean isSafe = bogies.stream()
-                .allMatch(b -> !b.type.equalsIgnoreCase("Cylindrical")
-                        || b.cargo.equalsIgnoreCase("Petroleum"));
+        long startLoop = System.nanoTime();
 
-        System.out.println(isSafe);
+        List<Bogie> loopResult = new ArrayList<>();
+        for (Bogie b : bogies) {
+            if (b.capacity > 60) {
+                loopResult.add(b);
+            }
+        }
+
+        long endLoop = System.nanoTime();
+        long loopTime = endLoop - startLoop;
+
+        long startStream = System.nanoTime();
+
+        List<Bogie> streamResult = bogies.stream()
+                .filter(b -> b.capacity > 60)
+                .toList();
+
+        long endStream = System.nanoTime();
+        long streamTime = endStream - startStream;
+
+        System.out.println("Loop Time: " + loopTime);
+        System.out.println("Stream Time: " + streamTime);
 
         sc.close();
     }
